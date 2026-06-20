@@ -12,21 +12,33 @@ function FileField({
   const [fileName, setFileName] = useState("");
 
   return (
-    <label>
+    <label className="block cursor-pointer">
       <span className="label">{label}</span>
 
-      <span className="flex min-h-28 cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 text-center text-sm">
+      <div className="flex min-h-28 flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-center hover:border-violet">
 
         <Upload size={22} className="mb-2 text-violet" />
 
         {fileName ? (
-          <span className="text-green-600 font-medium">
-            ✓ {fileName}
-          </span>
+          <>
+            <p className="font-medium text-green-600">
+              ✓ File selected
+            </p>
+
+            <p className="mt-1 text-xs text-slate-500 break-all">
+              {fileName}
+            </p>
+          </>
         ) : (
-          <span className="text-slate-500">
-            Tap to choose file
-          </span>
+          <>
+            <p className="text-slate-600">
+              Tap to choose file
+            </p>
+
+            <p className="mt-1 text-xs text-slate-400">
+              JPG, PNG, WEBP, PDF
+            </p>
+          </>
         )}
 
         <input
@@ -34,16 +46,19 @@ function FileField({
           type="file"
           accept={accept}
           required={required}
-          className="hidden"
+          className="absolute opacity-0 w-px h-px"
+
           onChange={(e) => {
             const file = e.target.files?.[0];
+
+            console.log("Selected file:", file);
+
             if (file) {
               setFileName(file.name);
             }
           }}
         />
-
-      </span>
+      </div>
     </label>
   );
 }
