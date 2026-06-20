@@ -20,7 +20,15 @@ export function AdmissionForm() {
     setServerError("");
     const form = new FormData(event?.target);
     Object.entries(values).forEach(([key, value]) => form.set(key, value));
-    const response = await fetch("/api/admissions", { method: "POST", body: form });
+    const response = await fetch(
+"/api/admissions",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify(values)
+});
     const json = await response.json();
     if (!response.ok) { setServerError(json.error || "Could not submit admission. Please try again."); return; }
     setResult({ ...values, admissionId: json.admissionId, createdAt: new Date(json.createdAt).toLocaleDateString("en-IN") });
