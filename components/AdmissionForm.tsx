@@ -1,4 +1,9 @@
-export function AdmissionForm({
+"use client";
+
+import { useState } from "react";
+import { Upload } from "lucide-react";
+
+function FileField({
   name,
   label,
   accept,
@@ -12,53 +17,65 @@ export function AdmissionForm({
   const [fileName, setFileName] = useState("");
 
   return (
-    <label className="block cursor-pointer">
+    <div>
       <span className="label">{label}</span>
 
-      <div className="flex min-h-28 flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-center hover:border-violet">
-
+      <label
+        htmlFor={name}
+        className="flex min-h-28 cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-center"
+      >
         <Upload size={22} className="mb-2 text-violet" />
 
         {fileName ? (
           <>
-            <p className="font-medium text-green-600">
-              ✓ File selected
-            </p>
-
-            <p className="mt-1 text-xs text-slate-500 break-all">
-              {fileName}
+            <p className="text-green-600 font-semibold">
+              ✓ {fileName}
             </p>
           </>
         ) : (
           <>
-            <p className="text-slate-600">
-              Tap to choose file
-            </p>
-
-            <p className="mt-1 text-xs text-slate-400">
-              JPG, PNG, WEBP, PDF
-            </p>
+            <p>Tap to choose file</p>
           </>
         )}
+      </label>
 
-        <input
-          name={name}
-          type="file"
-          accept={accept}
-          required={required}
-          className="absolute opacity-0 w-px h-px"
+      <input
+        id={name}
+        name={name}
+        type="file"
+        accept={accept}
+        required={required}
+        hidden
+        onChange={(e) => {
+          const file = e.target.files?.[0];
 
-          onChange={(e) => {
-            const file = e.target.files?.[0];
+          if (file) {
+            console.log(file.name);
+            setFileName(file.name);
+          }
+        }}
+      />
+    </div>
+  );
+}
 
-            console.log("Selected file:", file);
+export function AdmissionForm() {
+  return (
+    <div className="space-y-6">
 
-            if (file) {
-              setFileName(file.name);
-            }
-          }}
-        />
-      </div>
-    </label>
+      <FileField
+        name="studentPhoto"
+        label="Student photo"
+        accept="image/*"
+        required
+      />
+
+      <FileField
+        name="previousReport"
+        label="Previous report"
+        accept="image/*,.pdf"
+      />
+
+    </div>
   );
 }
