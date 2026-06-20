@@ -12,7 +12,6 @@ export async function POST(request: Request) {
     const values = Object.fromEntries(["studentName","fatherName","motherName","mobile","className","schoolName","address","preferredBatch"].map(k=>[k,String(form.get(k)||"")]));
     const parsed = admissionSchema.safeParse(values);
     if (!parsed.success) return NextResponse.json({ error: parsed.error.issues[0]?.message }, { status: 400 });
-    const photo = form.get("studentPhoto");
     const report = form.get("previousReport");
     if (!(photo instanceof File) || photo.size === 0) return NextResponse.json({ error: "Student photo is required." }, { status: 400 });
     if (photo.size > 5_000_000 || (report instanceof File && report.size > 8_000_000)) return NextResponse.json({ error: "Photo must be under 5 MB and report under 8 MB." }, { status: 400 });
