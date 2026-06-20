@@ -61,8 +61,7 @@ export function AdmissionForm() {
     <div className="mt-8 flex flex-col-reverse items-center justify-between gap-4 sm:flex-row"><p className="text-xs leading-5 text-slate-500">By submitting, you allow our admissions team to contact you.</p><button disabled={isSubmitting} className="btn-primary w-full sm:w-auto">{isSubmitting?<><Loader2 className="animate-spin" size={18}/>Submitting…</>:<>Submit admission <CheckCircle2 size={18}/></>}</button></div>
   </form>;
 }
-
- function FileField({
+function FileField({
   name,
   label,
   accept,
@@ -76,30 +75,29 @@ export function AdmissionForm() {
   const [fileName, setFileName] = useState("");
 
   return (
-    <div>
+    <label className="block cursor-pointer">
+
       <span className="label">{label}</span>
 
-      <label
-        htmlFor={name}
-        className="flex min-h-28 cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 text-center text-sm text-slate-500 hover:border-violet"
-      >
+      <div className="flex min-h-28 flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 text-center">
+
         <Upload size={22} className="mb-2 text-violet" />
 
         {fileName ? (
-          <span className="text-green-600 font-medium">
+          <span className="font-medium text-green-600">
             ✓ {fileName}
           </span>
         ) : (
-          <span>
+          <span className="text-slate-500">
             Tap to choose file
           </span>
         )}
-      </label>
+
+      </div>
 
       <input
-        id={name}
-        name={name}
         type="file"
+        name={name}
         accept={accept}
         required={required}
         className="hidden"
@@ -107,10 +105,12 @@ export function AdmissionForm() {
           const file = e.target.files?.[0];
 
           if (file) {
+            console.log("Selected:", file.name);
             setFileName(file.name);
           }
         }}
       />
-    </div>
+
+    </label>
   );
 }
