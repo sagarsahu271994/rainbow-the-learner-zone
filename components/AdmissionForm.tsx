@@ -1,4 +1,4 @@
-function FileField({
+export function AdmissionForm({
   name,
   label,
   accept,
