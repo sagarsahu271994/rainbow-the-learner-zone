@@ -15,7 +15,6 @@ export function AdmissionForm() {
   const [result, setResult] = useState<Result | null>(null);
   const [serverError, setServerError] = useState("");
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({ resolver: zodResolver(admissionSchema) });
-
   async function onSubmit(values: FormValues, event?: React.BaseSyntheticEvent) {
     setServerError("");
     const form = new FormData(event?.target);
@@ -54,8 +53,6 @@ export function AdmissionForm() {
       <label><span className="label">Class</span><select {...register("className")} className="field"><option value="">Select class</option>{Array.from({length:10},(_,i)=><option key={i+1} value={`Class ${i+1}`}>Class {i+1}</option>)}</select>{errors.className&&<span className="mt-1 block text-xs text-red-600">{errors.className.message}</span>}</label>
       <label><span className="label">Preferred batch</span><select {...register("preferredBatch")} className="field"><option value="">Select timing</option><option>Morning (7:00–9:00)</option><option>Afternoon (2:00–4:00)</option><option>Evening (4:00–7:00)</option></select>{errors.preferredBatch&&<span className="mt-1 block text-xs text-red-600">{errors.preferredBatch.message}</span>}</label>
       <label className="sm:col-span-2"><span className="label">Address</span><textarea {...register("address")} className="field min-h-28" placeholder="Complete residential address"/>{errors.address&&<span className="mt-1 block text-xs text-red-600">{errors.address.message}</span>}</label>
-      <FileField name="studentPhoto" label="Student photo" accept="image/jpeg,image/png,image/webp" required />
-      <FileField name="previousReport" label="Previous report" accept="image/jpeg,image/png,image/webp,application/pdf" />
     </div>
     {serverError&&<p className="mt-6 rounded-2xl bg-red-50 p-4 text-sm text-red-700">{serverError}</p>}
     <div className="mt-8 flex flex-col-reverse items-center justify-between gap-4 sm:flex-row"><p className="text-xs leading-5 text-slate-500">By submitting, you allow our admissions team to contact you.</p><button disabled={isSubmitting} className="btn-primary w-full sm:w-auto">{isSubmitting?<><Loader2 className="animate-spin" size={18}/>Submitting…</>:<>Submit admission <CheckCircle2 size={18}/></>}</button></div>
