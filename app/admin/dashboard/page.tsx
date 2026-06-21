@@ -1,12 +1,20 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 export default function Dashboard() {
 
-const rows = [
-{
-id:"RTLZ-001",
-name:"Demo Student",
-class:"6"
-}
-];
+const [rows,setRows]=useState<any[]>([]);
+
+useEffect(()=>{
+
+fetch(
+"/api/admin/students"
+)
+.then(r=>r.json())
+.then(setRows);
+
+},[]);
 
 return (
 
