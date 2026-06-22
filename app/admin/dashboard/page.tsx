@@ -1,4 +1,5 @@
 async function getStudents() {
+try {
 
 const res = await fetch(
 "https://rainbow-the-learner-zone.vercel.app/api/admin/students",
@@ -7,8 +8,17 @@ cache: "no-store"
 }
 );
 
-return res.json();
+if (!res.ok) {
+return [];
+}
 
+return await res.json();
+
+} catch {
+
+return [];
+
+}
 }
 
 export default async function Dashboard() {
@@ -32,34 +42,37 @@ Admissions
 <table className="w-full">
 
 <thead>
-
 <tr>
-
 <th>Admission ID</th>
-
 <th>Student</th>
-
 <th>Class</th>
-
 </tr>
-
 </thead>
 
 <tbody>
 
-{students?.map((s:any,index:number)=>(
+{Array.isArray(students)
+? students.map((s:any,i:number)=>(
 
-<tr key={index}>
+<tr key={i}>
 
-<td>{s["Admission ID"]}</td>
+<td>
+{s["Admission ID"] || "-"}
+</td>
 
-<td>{s["Student Name"]}</td>
+<td>
+{s["Student Name"] || "-"}
+</td>
 
-<td>{s["Class"]}</td>
+<td>
+{s["Class"] || "-"}
+
+</td>
 
 </tr>
 
-))}
+))
+: null}
 
 </tbody>
 
