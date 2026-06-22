@@ -1,7 +1,24 @@
 "use client";
 
 import { useState } from "react";
+
 export default function FeesPage() {
+
+const [studentName,setStudentName]=useState("");
+
+const [studentClass,setStudentClass]=useState("");
+
+const [feeMonth,setFeeMonth]=useState("");
+
+const [amount,setAmount]=useState("");
+
+const [receiptNo,setReceiptNo]=useState("");
+
+const [date,setDate]=useState(
+new Date()
+.toISOString()
+.split("T")[0]
+);{
 return (
 
 <div className="p-10">
