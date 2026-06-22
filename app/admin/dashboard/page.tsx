@@ -24,6 +24,7 @@ return [];
 export default async function Dashboard() {
 
 const students = await getStudents();
+const totalStudents = students?.length || 0;
 
 return (
 
