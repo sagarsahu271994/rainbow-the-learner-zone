@@ -62,7 +62,36 @@ Fee Slips
 <h2 className="text-2xl font-bold mb-6">
 Admissions
 </h2>
+<div className="mt-6">
 
+<div className="grid grid-cols-3 font-bold mb-4">
+
+<div>Admission ID</div>
+
+<div>Student</div>
+
+<div>Class</div>
+
+</div>
+
+{students?.map((student:any,index:number)=>(
+
+<div
+key={index}
+className="grid grid-cols-3 py-2"
+>
+
+<div>{student[1]}</div>
+
+<div>{student[2]}</div>
+
+<div>{student[7]}</div>
+
+</div>
+
+))}
+
+</div>
 <table className="w-full">
 
 <thead>
