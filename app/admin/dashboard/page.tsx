@@ -1,7 +1,7 @@
 async function getStudents() {
 
 const res = await fetch(
-`${process.env.NEXT_PUBLIC_SITE_URL}/api/admin/students`,
+"https://rainbow-the-learner-zone.vercel.app/api/admin/students",
 {
 cache: "no-store"
 }
