@@ -30,21 +30,32 @@ return (
 
 <div className="p-10">
 
-<h1 className="text-5xl font-bold mb-8">
+<div className="flex justify-between items-center mb-8">
+
+<div>
+<h1 className="text-5xl font-bold">
 Admin Dashboard
 </h1>
-<div className="mb-8">
-  <div className="border rounded-xl p-6 w-[250px]">
+</div>
 
-    <p className="text-gray-500">
-      Total Admissions
-    </p>
+<div className="flex gap-3">
 
-    <h2 className="text-5xl font-bold">
-      {totalStudents}
-    </h2>
+<a
+href="/admin/dashboard"
+className="border px-4 py-2 rounded-lg"
+>
+Dashboard
+</a>
 
-  </div>
+<a
+href="/admin/fees"
+className="bg-black text-white px-4 py-2 rounded-lg"
+>
+Fee Slips
+</a>
+
+</div>
+
 </div>
 <div className="border rounded-xl p-6">
 
