@@ -33,7 +33,19 @@ return (
 <h1 className="text-5xl font-bold mb-8">
 Admin Dashboard
 </h1>
+<div className="mb-8">
+  <div className="border rounded-xl p-6 w-[250px]">
 
+    <p className="text-gray-500">
+      Total Admissions
+    </p>
+
+    <h2 className="text-5xl font-bold">
+      {totalStudents}
+    </h2>
+
+  </div>
+</div>
 <div className="border rounded-xl p-6">
 
 <h2 className="text-2xl font-bold mb-6">
