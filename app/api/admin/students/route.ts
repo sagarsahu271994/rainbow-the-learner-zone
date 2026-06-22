@@ -7,7 +7,7 @@ export async function GET() {
       "1V0E8PEWmTJrp2kPi26NbV2qvbM_bQm2BwYReJZrXW28";
 
     const url =
-      `https://opensheet.elk.sh/${sheetId}/Rainbow%20Students`;
+      `https://opensheet.elk.sh/${sheetId}/Rainbow_Admission_Form`;
 
     const response = await fetch(url);
 
