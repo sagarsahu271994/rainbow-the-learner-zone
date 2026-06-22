@@ -1,37 +1,30 @@
-"use client";
+async function getStudents() {
+const res = await fetch(
+`${process.env.NEXT_PUBLIC_SITE_URL}/api/admin/students`,
+{
+cache: "no-store"
+}
+);
 
-import { useEffect, useState } from "react";
+return res.json();
+}
 
-export default function Dashboard() {
+export default async function Dashboard() {
 
-const [rows,setRows]=useState<any[]>([]);
-
-useEffect(()=>{
-
-fetch(
-"/api/admin/students"
-)
-.then(r=>r.json())
-.then(setRows);
-
-},[]);
+const students = await getStudents();
 
 return (
 
 <div className="p-10">
 
-<h1 className="text-4xl font-bold mb-8">
-
+<h1 className="text-5xl font-bold mb-8">
 Admin Dashboard
-
 </h1>
 
-<div className="rounded-xl border p-6">
+<div className="border rounded-xl p-6">
 
-<h2 className="text-xl font-semibold mb-4">
-
+<h2 className="text-2xl font-bold mb-6">
 Admissions
-
 </h2>
 
 <table className="w-full">
@@ -40,15 +33,15 @@ Admissions
 
 <tr>
 
-<th className="text-left">
+<th align="left">
 Admission ID
 </th>
 
-<th className="text-left">
+<th align="left">
 Student
 </th>
 
-<th className="text-left">
+<th align="left">
 Class
 </th>
 
@@ -58,23 +51,20 @@ Class
 
 <tbody>
 
-{rows.map((r)=>(
+{students?.map((s:any,index:number)=>(
 
-<tr
-key={r.id}
-className="border-t"
->
+<tr key={index}>
 
-<td className="py-4">
-{r.id}
+<td>
+{s["Admission ID"]}
 </td>
 
 <td>
-{r.name}
+{s["Student Name"]}
 </td>
 
 <td>
-{r.class}
+{s["Class"]}
 </td>
 
 </tr>
