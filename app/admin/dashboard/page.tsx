@@ -1,4 +1,5 @@
 async function getStudents() {
+
 const res = await fetch(
 `${process.env.NEXT_PUBLIC_SITE_URL}/api/admin/students`,
 {
@@ -7,6 +8,7 @@ cache: "no-store"
 );
 
 return res.json();
+
 }
 
 export default async function Dashboard() {
@@ -33,17 +35,11 @@ Admissions
 
 <tr>
 
-<th align="left">
-Admission ID
-</th>
+<th>Admission ID</th>
 
-<th align="left">
-Student
-</th>
+<th>Student</th>
 
-<th align="left">
-Class
-</th>
+<th>Class</th>
 
 </tr>
 
@@ -55,17 +51,11 @@ Class
 
 <tr key={index}>
 
-<td>
-{s["Admission ID"]}
-</td>
+<td>{s["Admission ID"]}</td>
 
-<td>
-{s["Student Name"]}
-</td>
+<td>{s["Student Name"]}</td>
 
-<td>
-{s["Class"]}
-</td>
+<td>{s["Class"]}</td>
 
 </tr>
 
