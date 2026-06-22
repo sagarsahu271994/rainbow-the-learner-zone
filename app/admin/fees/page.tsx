@@ -90,7 +90,7 @@ Received By
 <div>
 
 <img
-src="/signature.jpeg"
+src="/signature.png"
 alt="signature"
 className="h-16"
 />
