@@ -24,6 +24,51 @@ return (
 <div className="p-10">
 
 <div className="max-w-4xl mx-auto border rounded-xl p-10">
+  <div className="mb-8 grid grid-cols-2 gap-4">
+
+<input
+placeholder="Student Name"
+value={studentName}
+onChange={(e)=>setStudentName(e.target.value)}
+className="border p-3 rounded"
+/>
+
+<input
+placeholder="Class"
+value={studentClass}
+onChange={(e)=>setStudentClass(e.target.value)}
+className="border p-3 rounded"
+/>
+
+<input
+type="date"
+value={date}
+onChange={(e)=>setDate(e.target.value)}
+className="border p-3 rounded"
+/>
+
+<input
+placeholder="Month"
+value={feeMonth}
+onChange={(e)=>setFeeMonth(e.target.value)}
+className="border p-3 rounded"
+/>
+
+<input
+placeholder="Amount"
+value={amount}
+onChange={(e)=>setAmount(e.target.value)}
+className="border p-3 rounded"
+/>
+
+<input
+placeholder="Receipt No"
+value={receiptNo}
+onChange={(e)=>setReceiptNo(e.target.value)}
+className="border p-3 rounded"
+/>
+
+</div>
 
 <div className="text-center">
 
