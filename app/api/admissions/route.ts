@@ -4,32 +4,34 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const admissionId =
-      "RTLZ-" +
-      Date.now();
+    const SCRIPT_URL =
+      process.env.GOOGLE_ADMISSION_WEBHOOK_URL;
 
-    const response = await fetch(
-      process.env.GOOGLE_SHEET_WEBHOOK_URL!,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    if (!SCRIPT_URL) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Webhook URL missing",
         },
-        body: JSON.stringify({
-          ...body,
-          admissionId,
-        }),
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Google Sheet save failed");
+        {
+          status: 500,
+        }
+      );
     }
+
+    const response = await fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    const data = await response.text();
 
     return NextResponse.json({
       success: true,
-      admissionId,
-      createdAt: new Date(),
+      data,
     });
 
   } catch (error) {
@@ -37,7 +39,8 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       {
-        error: "Admission could not be saved",
+        success: false,
+        error: "Admission Save Failed",
       },
       {
         status: 500,
