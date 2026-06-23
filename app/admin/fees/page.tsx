@@ -89,11 +89,11 @@ The Learner Zone
 <div className="flex justify-between mt-10">
 
 <p>
-S. No. ______
+S. No.: {receiptNo}
 </p>
 
 <p>
-Date: __________
+Date: {date}
 </p>
 
 </div>
@@ -103,7 +103,7 @@ Date: __________
 <div>
 
 <p>Received From</p>
-
+Received From: {studentName}
 <input
 className="border-b w-full p-2"
 />
@@ -113,6 +113,16 @@ className="border-b w-full p-2"
 <div>
 
 <p>Class</p>
+Class: {studentClass}
+<input
+className="border-b w-full p-2"
+/>
+
+</div>
+
+<div>
+
+Fees for month: {feeMonth}
 
 <input
 className="border-b w-full p-2"
@@ -122,17 +132,7 @@ className="border-b w-full p-2"
 
 <div>
 
-<p>Fees for the month of Rs.</p>
-
-<input
-className="border-b w-full p-2"
-/>
-
-</div>
-
-<div>
-
-<p>Amount Rs.</p>
+Amount Rs: {amount}
 
 <input
 className="border-b w-full p-2"
