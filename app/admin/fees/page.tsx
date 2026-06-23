@@ -196,11 +196,12 @@ gap:"18px"
 <Field
 label="Received From"
 value={form.studentName}
-set={(v)=>
-update(
-"studentName",
-v
-)}
+set={(v: string) =>
+  update(
+    "studentName",
+    v
+  )
+}
 />
 
 <Field
