@@ -1,40 +1,50 @@
 import { NextResponse } from "next/server";
 
-const SCRIPT_URL =
-process.env.NEXT_PUBLIC_FEES_SCRIPT_URL!;
-
 export async function POST(req: Request) {
-try {
+  try {
+    const body = await req.json();
 
-const body = await req.json();
+    const SCRIPT_URL =
+      process.env.NEXT_PUBLIC_FEES_SCRIPT_URL;
 
-const res = await fetch(SCRIPT_URL, {
-method: "POST",
-headers: {
-"Content-Type": "application/json",
-},
-body: JSON.stringify(body),
-});
+    if (!SCRIPT_URL) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Fees webhook missing",
+        },
+        {
+          status: 500,
+        }
+      );
+    }
 
-const data = await res.text();
+    const response = await fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
 
-return NextResponse.json({
-success: true,
-data,
-});
+    const data = await response.text();
 
-} catch (error) {
+    return NextResponse.json({
+      success: true,
+      data,
+    });
 
-return NextResponse.json(
-{
-success: false,
-message: "Save failed",
-},
-{
-status: 500,
-}
-);
+  } catch (error) {
+    console.error(error);
 
-}
-
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Fees Save Failed",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
 }
