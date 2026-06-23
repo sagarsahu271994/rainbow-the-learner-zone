@@ -1,44 +1,126 @@
 "use client";
 
+import { useState } from "react";
+
 export default function FeesPage() {
+  const [form, setForm] = useState({
+    receiptNo: "",
+    date: "",
+    studentName: "",
+    className: "",
+    feeMonth: "",
+    amount: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  function update(name: string, value: string) {
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  async function submit() {
+    try {
+      setLoading(true);
+
+      const res = await fetch("/api/fees", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert("Fees Saved");
+      } else {
+        alert("Save Failed");
+      }
+    } catch {
+      alert("Error");
+    }
+
+    setLoading(false);
+  }
+
   return (
     <div
       style={{
+        maxWidth: 900,
+        margin: "auto",
         padding: 40,
-        background: "#f5f7ff",
-        minHeight: "100vh",
       }}
     >
-      <h1
+      <h1>Fees Receipt</h1>
+
+      <div
         style={{
-          fontSize: 40,
-          color: "#4f46e5",
+          display: "grid",
+          gap: 16,
+          gridTemplateColumns: "1fr 1fr",
         }}
       >
-        🎉 NEW FEES UI LOADED
-      </h1>
+        <input
+          placeholder="Receipt No"
+          value={form.receiptNo}
+          onChange={(e) =>
+            update("receiptNo", e.target.value)
+          }
+        />
 
-      <input
-        placeholder="Student Name"
-        style={{
-          display: "block",
-          padding: 12,
-          marginTop: 20,
-          width: 300,
-        }}
-      />
+        <input
+          type="date"
+          value={form.date}
+          onChange={(e) =>
+            update("date", e.target.value)
+          }
+        />
+
+        <input
+          placeholder="Student Name"
+          value={form.studentName}
+          onChange={(e) =>
+            update("studentName", e.target.value)
+          }
+        />
+
+        <input
+          placeholder="Class"
+          value={form.className}
+          onChange={(e) =>
+            update("className", e.target.value)
+          }
+        />
+
+        <input
+          placeholder="Fee Month"
+          value={form.feeMonth}
+          onChange={(e) =>
+            update("feeMonth", e.target.value)
+          }
+        />
+
+        <input
+          placeholder="Amount"
+          value={form.amount}
+          onChange={(e) =>
+            update("amount", e.target.value)
+          }
+        />
+      </div>
 
       <button
+        onClick={submit}
         style={{
-          marginTop: 20,
-          padding: "14px 24px",
-          background: "#111",
-          color: "#fff",
-          border: "none",
-          borderRadius: 10,
+          marginTop: 24,
+          padding: "14px 28px",
         }}
       >
-        Save Receipt
+        {loading ? "Saving..." : "Generate Receipt"}
       </button>
     </div>
   );
