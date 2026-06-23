@@ -4,34 +4,37 @@ const SCRIPT_URL =
 process.env.NEXT_PUBLIC_FEES_SCRIPT_URL!;
 
 export async function POST(req: Request) {
-  try {
+try {
 
-    const body = await req.json();
+const body = await req.json();
 
-    await fetch(SCRIPT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
+const res = await fetch(SCRIPT_URL, {
+method: "POST",
+headers: {
+"Content-Type": "application/json",
+},
+body: JSON.stringify(body),
+});
 
-    return NextResponse.json({
-      success: true,
-    });
+const data = await res.text();
 
-  } catch (error) {
+return NextResponse.json({
+success: true,
+data,
+});
 
-    console.log(error);
+} catch (error) {
 
-    return NextResponse.json(
-      {
-        success: false,
-      },
-      {
-        status: 500,
-      }
-    );
+return NextResponse.json(
+{
+success: false,
+message: "Save failed",
+},
+{
+status: 500,
+}
+);
 
-  }
+}
+
 }
