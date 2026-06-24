@@ -4,8 +4,6 @@ export async function POST(req: Request) {
 try {
 const body =
 await req.json();
-
-```
 const SCRIPT_URL =
   process.env
     .NEXT_PUBLIC_FEES_SCRIPT_URL;
