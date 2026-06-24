@@ -45,11 +45,9 @@ return NextResponse.json({
   success: true,
   pdfUrl: result,
 });
-```
 
 } catch (error) {
 
-```
 console.error(
   error
 );
@@ -64,7 +62,6 @@ return NextResponse.json(
     status: 500,
   }
 );
-```
 
 }
 }
