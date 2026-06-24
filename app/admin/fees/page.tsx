@@ -115,6 +115,69 @@ if(
 data.success
 ){
 
+window.location.href=
+
+`/fees/thank-you
+?receiptNo=${encodeURIComponent(form.receiptNo)}
+&student=${encodeURIComponent(form.studentName)}
+&class=${encodeURIComponent(form.className)}
+&month=${encodeURIComponent(form.feeMonth)}
+&amount=${encodeURIComponent(form.amount)}
+&receivedBy=${encodeURIComponent(form.receivedBy)}`;
+
+return;
+
+}
+
+alert(
+data.error ||
+"Save Failed"
+);
+
+}
+
+catch(error){
+
+console.log(
+error
+);
+
+alert(
+"Server Error"
+);
+
+}
+
+}
+
+
+try {
+
+const response =
+await fetch(
+"/api/fees",
+{
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:
+JSON.stringify(
+form
+)
+}
+);
+
+const data =
+await response.json();
+
+if(
+data.success
+){
+
 alert(
 "Receipt Saved"
 );
