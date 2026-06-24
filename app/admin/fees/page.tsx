@@ -86,34 +86,138 @@ export default function FeesPage() {
     }));
   }
 
-  function submit() {
-    alert(
-      "Receipt Saved"
-    );
-  }
+  async function submit() {
 
-  function pdf() {
-    alert(
-      "PDF feature connected next"
-    );
-  }
+try {
 
-  function whatsapp() {
-    const text =
-      `
-Receipt: ${form.receiptNo}
-Student: ${form.studentName}
-Class: ${form.className}
-Month: ${form.feeMonth}
-Amount: ₹${form.amount}
-`;
+const response =
+await fetch(
+"/api/fees",
+{
+method:"POST",
 
-    window.open(
-      `https://wa.me/?text=${encodeURIComponent(
-        text
-      )}`
-    );
-  }
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:
+JSON.stringify(
+form
+)
+}
+);
+
+const data =
+await response.json();
+
+if(
+data.success
+){
+
+alert(
+"Receipt Saved"
+);
+
+}
+
+else{
+
+alert(
+"Save Failed"
+);
+
+}
+
+}
+
+catch{
+
+alert(
+"Server Error"
+);
+
+}
+
+}
+
+  async function pdf(){
+
+const html2canvas=
+(await import(
+"html2canvas"
+)).default;
+
+const {
+default: jsPDF
+}=await import(
+"jspdf"
+);
+
+const el=
+document.getElementById(
+"receipt"
+);
+
+if(!el) return;
+
+const canvas=
+await html2canvas(
+el
+);
+
+const img=
+canvas.toDataURL(
+"image/png"
+);
+
+const pdfDoc =
+new jsPDF(
+"p",
+"mm",
+"a4"
+);
+
+pdfDoc.addImage(
+img,
+"PNG",
+10,
+10,
+190,
+250
+);
+
+pdfDoc.save(
+`${form.receiptNo}.pdf`
+);
+
+}
+
+ function whatsapp(){
+
+const text=
+
+`Receipt No:
+${form.receiptNo}
+
+Student:
+${form.studentName}
+
+Class:
+${form.className}
+
+Month:
+${form.feeMonth}
+
+Amount:
+₹${form.amount}`;
+
+window.open(
+`https://wa.me/?text=${encodeURIComponent(text)}`,
+"_blank"
+);
+
+}
 
   return (
     <div
@@ -168,17 +272,16 @@ Amount: ₹${form.amount}
           </button>
         </div>
 
-        <div
-          style={{
-            background:
-              "#fff",
-            borderRadius:
-              24,
-            padding: 40,
-            boxShadow:
-              "0 15px 50px rgba(0,0,0,.08)",
-          }}
-        >
+<div
+id="receipt"
+style={{
+background:"#fff",
+borderRadius:24,
+padding:40,
+boxShadow:
+"0 15px 50px rgba(0,0,0,.08)",
+}}
+>
           <div
             style={{
               display:
@@ -193,13 +296,13 @@ Amount: ₹${form.amount}
             }}
           >
             <img
-              src="/logo.png"
-              alt=""
-              style={{
-                width:
-                  90,
-              }}
-            />
+  src="/logo.png"
+  loading="lazy"
+  alt="Rainbow Logo"
+  style={{
+    width: 90,
+  }}
+/>
 
             <div>
               <h1
@@ -355,13 +458,13 @@ Amount: ₹${form.amount}
 
             <div>
               <img
-                src="/signature.jpeg"
-                alt=""
-                style={{
-                  height:
-                    80,
-                }}
-              />
+  src="/signature.jpeg"
+  loading="lazy"
+  alt="Signature"
+  style={{
+    height: 80,
+  }}
+/>
 
               <div>
                 Authorized
