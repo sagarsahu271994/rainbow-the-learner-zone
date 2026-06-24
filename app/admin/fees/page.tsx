@@ -85,22 +85,59 @@ export default function FeesPage() {
   }
 
   async function submit() {
-    try {
-      const response =
-        await fetch(
-          "/api/fees",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type":
-                "application/json",
-            },
-            body:
-              JSON.stringify(
-                form
-              ),
-          }
-        );
+
+try{
+
+const response=
+await fetch(
+"/api/fees",
+{
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:
+JSON.stringify(
+form
+)
+
+}
+);
+
+if(
+!response.ok
+){
+
+alert(
+"Save Failed"
+);
+
+return;
+
+}
+
+window.location.href=
+
+`/fees/thank-you?receiptNo=${encodeURIComponent(form.receiptNo)}
+&student=${encodeURIComponent(form.studentName)}
+&class=${encodeURIComponent(form.className)}
+&month=${encodeURIComponent(form.feeMonth)}
+&amount=${encodeURIComponent(form.amount)}`;
+
+}
+
+catch{
+
+alert(
+"Server Error"
+);
+
+}
+
+}
 
       const data =
         await response.json();
