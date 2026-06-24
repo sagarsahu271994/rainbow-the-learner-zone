@@ -20,16 +20,17 @@ type FieldProps = {
 
 function Field({ label, value, set }: FieldProps) {
   return (
-    <div>
+    <div style={{ marginBottom: 16 }}>
       <div style={{ marginBottom: 8, fontWeight: 600 }}>{label}</div>
       <input
         value={value}
-        onChange={(e) => set(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => set(e.target.value)}
         style={{
           width: "100%",
           padding: 14,
           border: "1px solid #ddd",
           borderRadius: 10,
+          boxSizing: "border-box",
         }}
       />
     </div>
@@ -54,7 +55,6 @@ export default function FeesPage() {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
-  // ✅ FIX: Cleaned up submit — removed duplicate/orphaned code outside try-catch
   async function submit() {
     try {
       const response = await fetch("/api/fees", {
@@ -110,6 +110,7 @@ export default function FeesPage() {
   return (
     <div style={{ background: "#f4f7fc", minHeight: "100vh", padding: 40 }}>
       <div style={{ maxWidth: 900, margin: "auto" }}>
+
         <div style={{ display: "flex", gap: 10, marginBottom: 20 }}>
           <button style={blue} onClick={submit}>Submit</button>
           <button style={black} onClick={pdf}>Download PDF</button>
@@ -125,58 +126,64 @@ export default function FeesPage() {
           <p>Fees Receipt</p>
           <br />
 
-          {/* ✅ FIX: 'v' is now correctly typed as string via FieldProps */}
           <Field
             label="Student"
             value={form.studentName}
-            set={(v) => update("studentName", v)}
+            set={(v: string) => update("studentName", v)}
           />
           <Field
             label="Class"
             value={form.className}
-            set={(v) => update("className", v)}
+            set={(v: string) => update("className", v)}
           />
           <Field
             label="Month"
             value={form.feeMonth}
-            set={(v) => update("feeMonth", v)}
+            set={(v: string) => update("feeMonth", v)}
           />
           <Field
             label="Amount"
             value={form.amount}
-            set={(v) => update("amount", v)}
+            set={(v: string) => update("amount", v)}
           />
           <Field
             label="Received By"
             value={form.receivedBy}
-            set={(v) => update("receivedBy", v)}
+            set={(v: string) => update("receivedBy", v)}
           />
 
           <br />
           <img src="/signature.jpeg" alt="" height="80" />
         </div>
+
       </div>
     </div>
   );
 }
 
-const blue = {
+const blue: React.CSSProperties = {
   background: "#4f46e5",
   color: "#fff",
   border: "none",
   padding: "14px 24px",
+  cursor: "pointer",
+  borderRadius: 8,
 };
 
-const black = {
+const black: React.CSSProperties = {
   background: "#111",
   color: "#fff",
   border: "none",
   padding: "14px 24px",
+  cursor: "pointer",
+  borderRadius: 8,
 };
 
-const green = {
+const green: React.CSSProperties = {
   background: "#16a34a",
   color: "#fff",
   border: "none",
   padding: "14px 24px",
+  cursor: "pointer",
+  borderRadius: 8,
 };
