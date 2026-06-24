@@ -26,7 +26,7 @@ canonical:"/"
 
 verification:{
 google:
-"Zzq51GojTVR3idryGhPSOdw-J1ogIjVhjaFeR8sXVeY"
+"x0YN-5dm2c7k_KaJXuEMB0E7-frnHUTWHYU4MdpFxOo"
 }
 
 };
