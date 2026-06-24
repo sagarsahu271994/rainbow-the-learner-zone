@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 
 export async function POST(
 req: Request
-) {
+){
 
-try {
+try{
 
 const body =
 await req.json();
@@ -19,7 +19,9 @@ if(
 
 return NextResponse.json(
 {
-success:false
+success:false,
+error:
+"Missing URL"
 },
 {
 status:500
@@ -46,16 +48,15 @@ body
 }
 );
 
-const data =
+const result =
 await response.text();
 
-return NextResponse.json({
-
+return NextResponse.json(
+{
 success:true,
-
-pdfUrl:data
-
-});
+pdfUrl:result
+}
+);
 
 }
 
@@ -67,7 +68,9 @@ error
 
 return NextResponse.json(
 {
-success:false
+success:false,
+error:
+"Server Error"
 },
 {
 status:500
