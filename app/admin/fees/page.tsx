@@ -15,7 +15,7 @@ type FormData = {
 type FieldProps = {
   label: string;
   value: string;
-  set: (value: string) => void;
+  set={(v: string)=> => void;
 };
 
 function Field({ label, value, set }: FieldProps) {
