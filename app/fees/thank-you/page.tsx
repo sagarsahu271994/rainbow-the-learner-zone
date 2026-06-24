@@ -2,35 +2,25 @@
 
 import { useSearchParams } from "next/navigation";
 
-export default function ThankYou(){
+export default function ThankYouPage() {
 
-const params=
+const p =
 useSearchParams();
 
-const receipt=
-params.get(
-"receiptNo"
-);
+const receipt =
+p.get("receiptNo");
 
-const student=
-params.get(
-"student"
-);
+const student =
+p.get("student");
 
-const amount=
-params.get(
-"amount"
-);
+const cls =
+p.get("class");
 
-const cls=
-params.get(
-"class"
-);
+const month =
+p.get("month");
 
-const month=
-params.get(
-"month"
-);
+const amount =
+p.get("amount");
 
 function download(){
 
@@ -73,11 +63,9 @@ return(
 
 <div
 style={{
-padding:60,
-minHeight:
-"100vh",
-background:
-"#f4f7fc"
+padding:50,
+minHeight:"100vh",
+background:"#f4f7fc"
 }}
 >
 
@@ -86,30 +74,20 @@ style={{
 maxWidth:700,
 margin:"auto",
 background:"#fff",
-padding:50,
-borderRadius:24
+padding:40,
+borderRadius:20
 }}
 >
-
-<div
-style={{
-fontSize:70
-}}
->
-
-✅
-
-</div>
 
 <h1>
 
-Receipt Saved
+✅ Receipt Saved
 
 </h1>
 
 <p>
 
-Receipt No:
+Receipt:
 {receipt}
 
 </p>
@@ -146,7 +124,7 @@ Amount:
 style={{
 display:"flex",
 gap:12,
-marginTop:30
+marginTop:20
 }}
 >
 
@@ -154,14 +132,9 @@ marginTop:30
 onClick={
 download
 }
-style={{
-padding:
-"14px 22px"
-}}
-
 >
 
-Download PDF
+Download
 
 </button>
 
@@ -169,14 +142,9 @@ Download PDF
 onClick={
 whatsapp
 }
-style={{
-padding:
-"14px 22px"
-}}
-
 >
 
-Send WhatsApp
+WhatsApp
 
 </button>
 
@@ -187,11 +155,6 @@ window.location.href=
 "/admin/fees"
 
 }
-style={{
-padding:
-"14px 22px"
-}}
-
 >
 
 New Receipt
