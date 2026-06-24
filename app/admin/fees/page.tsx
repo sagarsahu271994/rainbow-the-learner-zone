@@ -29,7 +29,6 @@ function Field({
         style={{
           marginBottom: 8,
           fontWeight: 600,
-          color: "#334155",
         }}
       >
         {label}
@@ -42,10 +41,9 @@ function Field({
         }
         style={{
           width: "100%",
-          padding: "14px",
-          border: "1px solid #dbe2ea",
-          borderRadius: "10px",
-          outline: "none",
+          padding: 14,
+          border: "1px solid #ddd",
+          borderRadius: 10,
         }}
       />
     </div>
@@ -87,200 +85,108 @@ export default function FeesPage() {
   }
 
   async function submit() {
+    try {
+      const response =
+        await fetch(
+          "/api/fees",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
+            body:
+              JSON.stringify(
+                form
+              ),
+          }
+        );
 
-try {
+      const data =
+        await response.json();
 
-const response =
-await fetch(
-"/api/fees",
-{
-method:"POST",
+      if (
+        data.success
+      ) {
+        window.location.href =
+          `/fees/thank-you?receiptNo=${form.receiptNo}&student=${form.studentName}&class=${form.className}&month=${form.feeMonth}&amount=${form.amount}`;
+      } else {
+        alert(
+          "Save Failed"
+        );
+      }
+    } catch {
+      alert(
+        "Server Error"
+      );
+    }
+  }
 
-headers:{
-"Content-Type":
-"application/json"
-},
+  async function pdf() {
+    const html2canvas =
+      (
+        await import(
+          "html2canvas"
+        )
+      ).default;
 
-body:
-JSON.stringify(
-form
-)
-}
-);
+    const {
+      default: jsPDF,
+    } =
+      await import(
+        "jspdf"
+      );
 
-const data =
-await response.json();
+    const el =
+      document.getElementById(
+        "receipt"
+      );
 
-if(
-data.success
-){
+    if (!el)
+      return;
 
-window.location.href=
+    const canvas =
+      await html2canvas(
+        el
+      );
 
-`/fees/thank-you
-?receiptNo=${encodeURIComponent(form.receiptNo)}
-&student=${encodeURIComponent(form.studentName)}
-&class=${encodeURIComponent(form.className)}
-&month=${encodeURIComponent(form.feeMonth)}
-&amount=${encodeURIComponent(form.amount)}
-&receivedBy=${encodeURIComponent(form.receivedBy)}`;
+    const img =
+      canvas.toDataURL(
+        "image/png"
+      );
 
-return;
+    const pdf =
+      new jsPDF(
+        "p",
+        "mm",
+        "a4"
+      );
 
-}
+    pdf.addImage(
+      img,
+      "PNG",
+      10,
+      10,
+      190,
+      250
+    );
 
-alert(
-data.error ||
-"Save Failed"
-);
+    pdf.save(
+      `${form.receiptNo}.pdf`
+    );
+  }
 
-}
+  function whatsapp() {
+    const msg =
+      `Receipt ${form.receiptNo}
+Student ${form.studentName}
+Amount ₹${form.amount}`;
 
-catch(error){
-
-console.log(
-error
-);
-
-alert(
-"Server Error"
-);
-
-}
-
-}
-
-
-try {
-
-const response =
-await fetch(
-"/api/fees",
-{
-method:"POST",
-
-headers:{
-"Content-Type":
-"application/json"
-},
-
-body:
-JSON.stringify(
-form
-)
-}
-);
-
-const data =
-await response.json();
-
-if(
-data.success
-){
-
-alert(
-"Receipt Saved"
-);
-
-}
-
-else{
-
-alert(
-"Save Failed"
-);
-
-}
-
-}
-
-catch{
-
-alert(
-"Server Error"
-);
-
-}
-
-}
-
-  async function pdf(){
-
-const html2canvas=
-(await import(
-"html2canvas"
-)).default;
-
-const {
-default: jsPDF
-}=await import(
-"jspdf"
-);
-
-const el=
-document.getElementById(
-"receipt"
-);
-
-if(!el) return;
-
-const canvas=
-await html2canvas(
-el
-);
-
-const img=
-canvas.toDataURL(
-"image/png"
-);
-
-const pdfDoc =
-new jsPDF(
-"p",
-"mm",
-"a4"
-);
-
-pdfDoc.addImage(
-img,
-"PNG",
-10,
-10,
-190,
-250
-);
-
-pdfDoc.save(
-`${form.receiptNo}.pdf`
-);
-
-}
-
- function whatsapp(){
-
-const text=
-
-`Receipt No:
-${form.receiptNo}
-
-Student:
-${form.studentName}
-
-Class:
-${form.className}
-
-Month:
-${form.feeMonth}
-
-Amount:
-₹${form.amount}`;
-
-window.open(
-`https://wa.me/?text=${encodeURIComponent(text)}`,
-"_blank"
-);
-
-}
+    window.open(
+      `https://wa.me/?text=${encodeURIComponent(msg)}`,
+      "_blank"
+    );
+  }
 
   return (
     <div
@@ -294,21 +200,24 @@ window.open(
     >
       <div
         style={{
-          maxWidth: 980,
-          margin: "auto",
+          maxWidth: 900,
+          margin:
+            "auto",
         }}
       >
         <div
           style={{
-            display: "flex",
-            gap: 12,
-            marginBottom: 20,
-            flexWrap:
-              "wrap",
+            display:
+              "flex",
+            gap: 10,
+            marginBottom:
+              20,
           }}
         >
           <button
-            style={blue}
+            style={
+              blue
+            }
             onClick={
               submit
             }
@@ -317,7 +226,9 @@ window.open(
           </button>
 
           <button
-            style={black}
+            style={
+              black
+            }
             onClick={
               pdf
             }
@@ -326,215 +237,126 @@ window.open(
           </button>
 
           <button
-            style={green}
+            style={
+              green
+            }
             onClick={
               whatsapp
             }
           >
-            Send WhatsApp
+            WhatsApp
           </button>
         </div>
 
-<div
-id="receipt"
-style={{
-background:"#fff",
-borderRadius:24,
-padding:40,
-boxShadow:
-"0 15px 50px rgba(0,0,0,.08)",
-}}
->
-          <div
-            style={{
-              display:
-                "flex",
-              gap: 20,
-              alignItems:
-                "center",
-              borderBottom:
-                "2px solid #ececec",
-              paddingBottom:
-                20,
-            }}
-          >
-            <img
-  src="/logo.png"
-  loading="lazy"
-  alt="Rainbow Logo"
-  style={{
-    width: 90,
-  }}
-/>
+        <div
+          id="receipt"
+          style={{
+            background:
+              "#fff",
+            padding:
+              40,
+            borderRadius:
+              20,
+          }}
+        >
+          <img
+            src="/logo.png"
+            alt=""
+            width="90"
+          />
 
-            <div>
-              <h1
-                style={{
-                  margin:
-                    0,
-                  fontSize:
-                    34,
-                }}
-              >
-                Rainbow
-              </h1>
+          <h1>
+            Rainbow
+          </h1>
 
-              <div>
-                The Learner
-                Zone
-              </div>
+          <p>
+            Fees Receipt
+          </p>
 
-              <div>
-                Fees Receipt
-              </div>
-            </div>
-          </div>
+          <br />
 
-          <div
-            style={{
-              display:
-                "flex",
-              justifyContent:
-                "space-between",
-              marginTop:
-                25,
-            }}
-          >
-            <div>
-              <b>
-                Receipt:
-              </b>{" "}
-              {
-                form.receiptNo
-              }
-            </div>
-
-            <div>
-              <b>
-                Date:
-              </b>{" "}
-              {
-                form.date
-              }
-            </div>
-          </div>
-
-          <div
-            style={{
-              marginTop:
-                30,
-              display:
-                "grid",
-              gap: 18,
-            }}
-          >
-            <Field
-              label="Student Name"
-              value={
-                form.studentName
-              }
-              set={(
+          <Field
+            label="Student"
+            value={
+              form.studentName
+            }
+            set={(
+              v
+            ) =>
+              update(
+                "studentName",
                 v
-              ) =>
-                update(
-                  "studentName",
-                  v
-                )
-              }
-            />
+              )
+            }
+          />
 
-            <Field
-              label="Class"
-              value={
-                form.className
-              }
-              set={(
+          <Field
+            label="Class"
+            value={
+              form.className
+            }
+            set={(
+              v
+            ) =>
+              update(
+                "className",
                 v
-              ) =>
-                update(
-                  "className",
-                  v
-                )
-              }
-            />
+              )
+            }
+          />
 
-            <Field
-              label="Fee Month"
-              value={
-                form.feeMonth
-              }
-              set={(
+          <Field
+            label="Month"
+            value={
+              form.feeMonth
+            }
+            set={(
+              v
+            ) =>
+              update(
+                "feeMonth",
                 v
-              ) =>
-                update(
-                  "feeMonth",
-                  v
-                )
-              }
-            />
+              )
+            }
+          />
 
-            <Field
-              label="Amount"
-              value={
-                form.amount
-              }
-              set={(
+          <Field
+            label="Amount"
+            value={
+              form.amount
+            }
+            set={(
+              v
+            ) =>
+              update(
+                "amount",
                 v
-              ) =>
-                update(
-                  "amount",
-                  v
-                )
-              }
-            />
+              )
+            }
+          />
 
-            <Field
-              label="Received By"
-              value={
-                form.receivedBy
-              }
-              set={(
+          <Field
+            label="Received By"
+            value={
+              form.receivedBy
+            }
+            set={(
+              v
+            ) =>
+              update(
+                "receivedBy",
                 v
-              ) =>
-                update(
-                  "receivedBy",
-                  v
-                )
-              }
-            />
-          </div>
+              )
+            }
+          />
 
-          <div
-            style={{
-              display:
-                "flex",
-              justifyContent:
-                "space-between",
-              marginTop:
-                70,
-            }}
-          >
-            <div>
-              Student
-              Signature
-            </div>
+          <br />
 
-            <div>
-              <img
-  src="/signature.jpeg"
-  loading="lazy"
-  alt="Signature"
-  style={{
-    height: 80,
-  }}
-/>
-
-              <div>
-                Authorized
-                Signature
-              </div>
-            </div>
-          </div>
+          <img
+            src="/signature.jpeg"
+            alt=""
+            height="80"
+          />
         </div>
       </div>
     </div>
@@ -544,32 +366,32 @@ boxShadow:
 const blue = {
   background:
     "#4f46e5",
-  color: "#fff",
-  border: "none",
+  color:
+    "#fff",
+  border:
+    "none",
   padding:
     "14px 24px",
-  borderRadius:
-    10,
 };
 
 const black = {
   background:
     "#111",
-  color: "#fff",
-  border: "none",
+  color:
+    "#fff",
+  border:
+    "none",
   padding:
     "14px 24px",
-  borderRadius:
-    10,
 };
 
 const green = {
   background:
     "#16a34a",
-  color: "#fff",
-  border: "none",
+  color:
+    "#fff",
+  border:
+    "none",
   padding:
     "14px 24px",
-  borderRadius:
-    10,
 };
