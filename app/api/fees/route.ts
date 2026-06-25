@@ -9,10 +9,6 @@ try {
 const body =
 await req.json();
 
-const receiptNumber =
-body.receiptNo ||
-"RTL-1250";
-
 const SCRIPT_URL =
 process.env
 .NEXT_PUBLIC_FEES_SCRIPT_URL;
@@ -44,11 +40,9 @@ headers:{
 },
 
 body:
-JSON.stringify({
-...body,
-receiptNo:
-receiptNumber,
-}),
+JSON.stringify(
+body
+),
 
 }
 );
@@ -59,8 +53,7 @@ await response.text();
 return NextResponse.json(
 {
 success:true,
-pdfUrl:
-result,
+data:result,
 }
 );
 
