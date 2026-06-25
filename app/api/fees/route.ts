@@ -1,81 +1,62 @@
 import { NextResponse } from "next/server";
 
-export async function POST(
-req: Request
-) {
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
 
-try {
+    const SCRIPT_URL =
+      process.env.NEXT_PUBLIC_FEES_SCRIPT_URL;
 
-const body =
-await req.json();
+    if (!SCRIPT_URL) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Missing Script URL",
+        },
+        {
+          status: 500,
+        }
+      );
+    }
 
-const SCRIPT_URL =
-process.env
-.NEXT_PUBLIC_FEES_SCRIPT_URL;
+    const response =
+      await fetch(
+        SCRIPT_URL,
+        {
+          method: "POST",
 
-if (!SCRIPT_URL) {
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
 
-return NextResponse.json(
-{
-success:false,
-error:
-"Missing Script URL",
-},
-{
-status:500,
-}
-);
+          body:
+            JSON.stringify(
+              body
+            ),
+        }
+      );
 
-}
+    const result =
+      await response.text();
 
-const response =
-await fetch(
-SCRIPT_URL,
-{
-method:"POST",
+    return NextResponse.json({
+      success: true,
+      pdfUrl: result,
+    });
 
-headers:{
-"Content-Type":
-"application/json",
-},
+  } catch (error) {
 
-body:
-JSON.stringify(
-body
-),
+    console.error(error);
 
-}
-);
-
-const result =
-await response.text();
-
-return NextResponse.json(
-{
-success:true,
-data:result,
-}
-);
-
-}
-
-catch(error){
-
-console.error(
-error
-);
-
-return NextResponse.json(
-{
-success:false,
-error:
-"Save Failed",
-},
-{
-status:500,
-}
-);
-
-}
-
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Save Failed",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
 }
