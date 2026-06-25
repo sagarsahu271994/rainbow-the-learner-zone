@@ -4,6 +4,10 @@ export async function POST(req: Request) {
 try {
 const body =
 await req.json();
+  const receiptNumber =
+body.receiptNo
+||
+`RTL-${1250}`;
 const SCRIPT_URL =
   process.env
     .NEXT_PUBLIC_FEES_SCRIPT_URL;
@@ -31,9 +35,12 @@ const response =
           "application/json",
       },
 
-      body:
-        JSON.stringify(
-          body
+    body:
+JSON.stringify({
+...body,
+receiptNo:
+receiptNumber
+})
         ),
     }
   );
