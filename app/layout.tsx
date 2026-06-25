@@ -4,7 +4,8 @@ import { Analytics } from "@/components/Analytics";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://rainbow-the-learner-zone.vercel.app";
+const siteUrl =
+"https://rainbow-the-learner-zone.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
