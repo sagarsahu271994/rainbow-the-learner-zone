@@ -71,10 +71,10 @@ new Date()
 .toISOString()
 .split("T")[0];
 
-const receipt=
+const receipt =
 useMemo(
 ()=>
-`RTL-${Date.now()}`,
+"RTL-1250",
 []
 );
 
