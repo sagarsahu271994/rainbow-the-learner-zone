@@ -4,10 +4,11 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const SCRIPT_URL =
-      process.env.NEXT_PUBLIC_FEES_SCRIPT_URL;
+    const scriptUrl =
+      process.env
+        .NEXT_PUBLIC_FEES_SCRIPT_URL;
 
-    if (!SCRIPT_URL) {
+    if (!scriptUrl) {
       return NextResponse.json(
         {
           success: false,
@@ -20,29 +21,25 @@ export async function POST(req: Request) {
     }
 
     const response =
-      await fetch(
-        SCRIPT_URL,
-        {
-          method: "POST",
+      await fetch(scriptUrl, {
+        method: "POST",
 
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
 
-          body:
-            JSON.stringify(
-              body
-            ),
-        }
-      );
+        body:
+          JSON.stringify(body),
+      });
 
     const result =
-      await response.text();
+      await response.json();
 
     return NextResponse.json({
       success: true,
-      pdfUrl: result,
+      receiptNo:
+        result.receiptNo,
     });
 
   } catch (error) {
