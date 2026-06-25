@@ -24,9 +24,9 @@ alternates:{
 canonical:"/"
 },
 
-verification:{
-google:
-"google431b7e4cc076f227.html"
-}
+verification: {
+  google:
+    "x0YN-5dm2c7k_KaJXuEMB0E7-frnHUTWHYU4MdpFxOo",
+},
 
 };
