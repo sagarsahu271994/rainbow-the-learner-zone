@@ -42,7 +42,6 @@ receiptNo:
 receiptNumber
 })
         ),
-    }
   );
 
 const result =
