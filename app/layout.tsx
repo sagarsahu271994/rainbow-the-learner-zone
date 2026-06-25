@@ -12,7 +12,10 @@ export const metadata: Metadata = {
   description: "Admissions open for 2026–27. Personal attention, strong fundamentals and supportive tuition classes in Nehru Nagar, Indore.",
   keywords: ["tuition classes Indore", "coaching Nehru Nagar", "school tuition Indore", "Rainbow The Learner Zone"],
   openGraph: { title: "Rainbow The Learner Zone", description: "Where confident learners grow.", type: "website", images: ["/hero-classroom.png"] },
-  alternates: { canonical: "/" }
+  alternates: { canonical: "/" },
+  verification: {
+    google: "x0YN-5dm2c7k_KaJXuEMB0E7-frnHUTWHYU4MdpFxOo"
+  }
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
