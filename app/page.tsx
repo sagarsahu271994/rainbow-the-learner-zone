@@ -23,10 +23,46 @@ const faqs = [
   ["Can I check fee status online?", "Yes. Use the Fee Slip page with your registered mobile number or Admission ID."]
 ];
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  name: "Rainbow The Learner Zone",
+  url: "https://rainbow-the-learner-zone.vercel.app",
+  logo: "https://rainbow-the-learner-zone.vercel.app/logo.png",
+  image: "https://rainbow-the-learner-zone.vercel.app/hero-classroom.png",
+
+  description:
+    "Rainbow The Learner Zone is one of the best tuition classes in Nehru Nagar, Indore offering coaching from Nursery to Class 12 with experienced teachers and personalized learning.",
+
+  telephone: "+91-6263549413",
+
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "110/2, Nehru Nagar",
+    addressLocality: "Indore",
+    addressRegion: "Madhya Pradesh",
+    postalCode: "452001",
+    addressCountry: "IN",
+  },
+
+  areaServed: "Indore",
+
+  sameAs: [
+    "https://www.facebook.com/",
+    "https://www.instagram.com/",
+  ],
+};
+
 export default function Home() {
   return (
     <>
       <Header />
+      <script
+type="application/ld+json"
+dangerouslySetInnerHTML={{
+__html: JSON.stringify(jsonLd),
+}}
+/>
       <main>
         <section className="relative overflow-hidden bg-cream">
           <div className="absolute -left-16 top-20 h-56 w-56 rounded-full bg-sunshine/20 blur-3xl" />
@@ -34,8 +70,8 @@ export default function Home() {
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 rounded-full border border-sunshine/40 bg-white px-4 py-2 text-xs font-bold"><Sparkles size={15} className="text-coral" /> Admissions open for 2026–27</div>
               <h1 className="mt-7 text-5xl font-black leading-[1.04] tracking-[-.05em] sm:text-7xl">Learning that brings out <span className="rainbow-text">every colour.</span></h1>
-              <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Personal attention, stronger concepts and the confidence to keep growing—right here in Nehru Nagar, Indore.</p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row"><Link href="/admission" className="btn-primary">Start admission <ArrowRight size={18} /></Link><a href="tel:+916263549413" className="btn-light"><Phone size={18} /> Talk to us</a></div>
+              <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Rainbow The Learner Zone provides quality tuition classes in Nehru Nagar, Indore for Nursery to Class 12. We focus on concept-based learning, experienced teachers, regular tests, homework support and overall academic excellence.</p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row"><Link href="/admission" className="btn-primary">Apply for Admission 2026-27 <ArrowRight size={18} /></Link><a href="tel:+916263549413" className="btn-light"><Phone size={18} /> Talk to us</a></div>
               <div className="mt-10 flex flex-wrap gap-6 text-sm font-semibold text-slate-600"><span className="flex items-center gap-2"><CheckCircle2 className="text-leaf" size={18}/> Classes 1–10</span><span className="flex items-center gap-2"><CheckCircle2 className="text-leaf" size={18}/> Small batches</span><span className="flex items-center gap-2"><CheckCircle2 className="text-leaf" size={18}/> Parent updates</span></div>
             </div>
             <div className="relative">
